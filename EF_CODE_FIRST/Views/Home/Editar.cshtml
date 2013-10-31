@@ -1,0 +1,26 @@
+﻿@model EF_CODE_FIRST.Models.Books
+@{
+    ViewBag.Title = "Editar";
+}
+
+<div class="Container">
+    <div class="row">
+        <fieldset>
+            @using (Html.BeginForm("Editar", "Home", FormMethod.Post))
+            {
+                @Html.ValidationSummary(true)
+                <legend>Actualizar libro de titulo: @Model.Title</legend>
+                <label for="Title">Titulo</label>
+                @Html.EditorFor(m => Model.Title)
+                @Html.ValidationMessageFor(modelName => Model.Title)
+                <label for="Author">Autor</label>
+                @Html.EditorFor(m => Model.Author)
+                @Html.ValidationMessageFor(modelName => Model.Author)
+                <br />
+                <input type="submit" value="Actualizar" class="btn btn-primary" />
+
+            }
+        </fieldset>
+    </div>
+</div>
+

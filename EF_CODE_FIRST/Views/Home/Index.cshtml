@@ -1,0 +1,92 @@
+﻿@model ICollection<EF_CODE_FIRST.Models.Books>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+
+
+
+<div class="container" id="containerIndex">
+    <div class="row">
+        @using (Html.BeginForm("Busqueda", "Home", FormMethod.Get))
+        {
+            <label for="busqueda">Buscar libros</label>
+            <input type="text" placeholder="Ingrese su búsqueda aquí" required name="busqueda" />@:&nbsp;
+            <input type="submit" value="Buscar" class ="btn btn-primary" name="buscar" />
+        }
+    </div>
+    <div class="row">
+        @Html.ActionLink("Crear nuevo libro", "Crear", null, new { @class = "btn btn-primary" })
+   </div>
+    <div class="row">
+        <table class="table table-stripped" id="tbl">
+            <thead>
+                <tr>
+                    <th>Titulo</th>
+                    <th>Autor</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var books in Model)
+              {
+                <tr>
+                        <td>@books.Title</td>
+                        <td>@books.Author</td>
+                        <td>@Html.ActionLink("Editar", "Editar", new{id = books.Id}, new{@class = "btn btn-primary"})</td>
+                        <td>@Html.ActionLink("Eliminar", "Eliminar", new { id = books.Id }, new { @class = "btn btn-danger" })</td>
+                </tr>
+              }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+@section Scripts
+{
+    <script>
+
+        $(function () {
+
+
+            $('body').on("click", 'input[name = "buscar"]', function (e) {
+
+
+
+                var request = $.ajax({
+
+                    url: '/Home/Busqueda',
+                    type: 'GET',
+                    data: { busqueda: $('input[name = "busqueda"').val() }
+
+                });
+
+                request.done(function (data) {
+
+                    $('#containerIndex').html(data);
+                   
+
+
+                });
+
+                e.preventDefault();
+
+            });
+
+
+
+
+
+        });
+
+
+    </script>
+
+
+
+}
+
